@@ -1,0 +1,15 @@
+D:\Workspace\revature\DaniloDiogo\HighOrLow\bin\Debug\net8.0\HighOrLow.exe
+D:\Workspace\revature\DaniloDiogo\HighOrLow\bin\Debug\net8.0\HighOrLow.deps.json
+D:\Workspace\revature\DaniloDiogo\HighOrLow\bin\Debug\net8.0\HighOrLow.runtimeconfig.json
+D:\Workspace\revature\DaniloDiogo\HighOrLow\bin\Debug\net8.0\HighOrLow.dll
+D:\Workspace\revature\DaniloDiogo\HighOrLow\bin\Debug\net8.0\HighOrLow.pdb
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.GeneratedMSBuildEditorConfig.editorconfig
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.AssemblyInfoInputs.cache
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.AssemblyInfo.cs
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.csproj.CoreCompileInputs.cache
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.sourcelink.json
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.dll
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\refint\HighOrLow.dll
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.pdb
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\HighOrLow.genruntimeconfig.cache
+D:\Workspace\revature\DaniloDiogo\HighOrLow\obj\Debug\net8.0\ref\HighOrLow.dll
