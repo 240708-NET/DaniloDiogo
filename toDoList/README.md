@@ -3,7 +3,7 @@
 
 ## Functionalities
 
-### The user can:
+#### The user can:
 
 * Create new tasks.
 * Set tasks as completed.
