@@ -1,14 +1,8 @@
-
-/*
-        TODO
-        - Validate imputs
-        - Add option to cancel the action
-        - Menus can be better
-        - Validate when you try to delete or set as complete and send an option that is not on the list.
-    */
 public class ToDoList {
 
     int menuChoice;
+
+    string errorMsg = "";
     List<Task> toDoList = new List<Task>();
 
     public ToDoList(){
@@ -19,20 +13,20 @@ public class ToDoList {
         }
     }
 
-
-
     public void menu(){
-
-            Console.WriteLine("Select one option:");
-            Console.WriteLine("1. List tasks");
-            Console.WriteLine("2. New task");
-            Console.WriteLine("3. Set task complete");
-            Console.WriteLine("4. Delete task");
-            Console.WriteLine("5. Exit");
-
-            this.menuChoice = int.Parse(Console.ReadLine());  
-
-            switch (this.menuChoice){
+        Console.WriteLine("--------------------# Menu #---------------------");
+        Console.WriteLine("Select one option:");
+        Console.WriteLine("1. List tasks");
+        Console.WriteLine("2. New task");
+        Console.WriteLine("3. Set task complete");
+        Console.WriteLine("4. Delete task");
+        Console.WriteLine("5. Exit");
+        Console.WriteLine("-------------------------------------------------");
+        this.errorMsg = "";
+        if (int.TryParse(Console.ReadLine(), out menuChoice)){
+            
+            switch (menuChoice)
+            {
                 case 1:
                     this.listTasks();
                     break;
@@ -53,15 +47,21 @@ public class ToDoList {
                     break;
 
                 default:
-                    Console.WriteLine("Wrong option!");
+                    Console.Clear();
+                    Console.WriteLine("Error: Wrong option! Try again.");
                     this.menu();
                     break;
             }
+        }else{
+            Console.WriteLine("Error: Incorrect option! Try again.");
+            this.menu();
+        }
 
     }
 
     public void listTasks(){
         if(toDoList.Count > 0){
+            Console.Clear();
             this.list();
         }else{
             Console.WriteLine("TODO List empty! ");
@@ -71,45 +71,92 @@ public class ToDoList {
     }
 
     public void newTask(){
-        //Console.Clear();
-        Console.WriteLine("Enter the task description: ");
+        Console.Clear();
+        Console.WriteLine(this.errorMsg);
+        Console.WriteLine("Enter the task description (2 characters at least) or 0 to cancel: ");
         Task task = new Task();
         task.description = Console.ReadLine();
-        toDoList.Add(task);
-        Console.WriteLine("\n");
-        this.menu();
+        if (!task.description.Equals("0")){
+            if(task.description.Length >= 2){
+                toDoList.Add(task);
+                Console.Clear();
+                Console.WriteLine($"Task '{task.description}' successfully added!");
+                Console.WriteLine("\n");
+                this.menu();
+            }else{
+                this.errorMsg = "Error: Minimum 2 characters need to be entered. Try again.";
+                this.newTask();
+            }
+            
+        }else{
+            Console.Clear();
+            this.menu();
+        }
     }
 
     public void setTaskComplete(){
-        //Console.Clear();
+        Console.Clear();
+        Console.WriteLine(this.errorMsg);
         this.list();
         Console.WriteLine("Enter the task number or 0 to cancel: ");
         int option;
         if (int.TryParse(Console.ReadLine(), out option)){
             if(option != 0){
-                toDoList[option-1].done = true;
-                Console.WriteLine($"Task {option} completed!");
-                Console.WriteLine("\n");
-                this.menu();
+                //Task task = toDoList[option - 1];
+                if(toDoList.ElementAtOrDefault(option - 1) != null){
+                    toDoList[option-1].done = true;
+                    Console.Clear();
+                    Console.WriteLine($"Task {option} set as completed!");
+                    Console.WriteLine("\n");
+                    this.menu();
+                }else{
+                    this.errorMsg = $"Error: Task {option} not found! Try again.";
+                    //Console.WriteLine($"Task {option} not found! Try again.");
+                    this.setTaskComplete();
+                }
+                
             }else{
+                Console.Clear();
                 this.menu();
             }
+            
         }else{
-            Console.WriteLine("Invalid option! Try again.");
+            Console.WriteLine("Error: Invalid option! Try again.");
             this.setTaskComplete();
         }
     }
 
     public void deleteTask(){
-        Console.WriteLine("Enter the task number you want to remove: ");
-        int option = int.Parse(Console.ReadLine());
-        toDoList.RemoveAt(option - 1);
-        Console.WriteLine($"Task {option} removed!");
-        this.menu();
+        Console.Clear();
+        Console.WriteLine(this.errorMsg);
+        this.list();
+        Console.WriteLine("Enter the task number you want to remove or 0 to cancel: ");
+        int option;
+        if (int.TryParse(Console.ReadLine(), out option)){
+            if (option != 0){
+                if (toDoList.ElementAtOrDefault(option - 1) != null){
+                    toDoList.RemoveAt(option - 1);
+                    Console.Clear();
+                    Console.WriteLine($"Task {option} removed!");
+                    this.menu();
+                }else{
+                    this.errorMsg = $"Error: Task {option} not found! Try again.";
+                    //Console.WriteLine($"Task {option} not found! Try again.");
+                    this.deleteTask();
+                }
+            }else{
+                Console.Clear();
+                this.menu();
+            }
+        }else{
+            Console.WriteLine("Error: Invalid option! Try again.");
+            this.deleteTask();
+        }
+        
     }
 
     public void list(){
-        Console.WriteLine("\n");
+        //Console.WriteLine("\n");
         Console.WriteLine("------------------# TODO List #------------------");
         for(int i = 0; i < toDoList.Count; i++){
             Console.WriteLine($"{i+1} - ["+(toDoList[i].done ? "X" : " ")+"] "+toDoList[i].description);
