@@ -1,6 +1,6 @@
 -- List all customers (full name, customer id, and country) who are not in the USA
-SELECT * FROM Customer c 
-	WHERE c.Country <> 'USA'
+SELECT c.CustomerId, CONCAT(c.FirstName, ' ', c.LastName) as fullName, c.Country FROM [MyDatabase].[dbo].[Customer] c 
+	WHERE c.Country != 'USA'
 	
 -- List all customers from Brazil
 SELECT * FROM Customer c 

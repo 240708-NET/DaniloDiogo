@@ -6,15 +6,11 @@ public class ToDoList {
     List<Task> toDoList = new List<Task>();
 
     public ToDoList(){
-        for(int i = 0; i < 3; i++){
-            Task task = new Task();
-            task.description = "Task" + i;
-            toDoList.Add(task);
-        }
+        
     }
 
     public void menu(){
-        Console.WriteLine("--------------------# Menu #---------------------");
+        Console.WriteLine("--------------------# TODO List Menu #---------------------");
         Console.WriteLine("Select one option:");
         Console.WriteLine("1. List tasks");
         Console.WriteLine("2. New task");
@@ -102,7 +98,6 @@ public class ToDoList {
         int option;
         if (int.TryParse(Console.ReadLine(), out option)){
             if(option != 0){
-                //Task task = toDoList[option - 1];
                 if(toDoList.ElementAtOrDefault(option - 1) != null){
                     toDoList[option-1].done = true;
                     Console.Clear();
@@ -111,7 +106,6 @@ public class ToDoList {
                     this.menu();
                 }else{
                     this.errorMsg = $"Error: Task {option} not found! Try again.";
-                    //Console.WriteLine($"Task {option} not found! Try again.");
                     this.setTaskComplete();
                 }
                 
@@ -141,7 +135,6 @@ public class ToDoList {
                     this.menu();
                 }else{
                     this.errorMsg = $"Error: Task {option} not found! Try again.";
-                    //Console.WriteLine($"Task {option} not found! Try again.");
                     this.deleteTask();
                 }
             }else{
