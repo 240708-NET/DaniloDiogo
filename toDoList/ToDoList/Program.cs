@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using ToDoList;
 
 namespace ConsoleApp
 {
@@ -9,9 +10,9 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             
-            ToDoList toDoList = new ToDoList();
+            ToDoListService toDoListService = new ToDoListService();
 
-            toDoList.menu();
+            toDoListService.menu();
 
         }
 

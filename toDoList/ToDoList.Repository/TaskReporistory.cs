@@ -1,39 +1,28 @@
+using ToDoList.Models;
 
-using toDoList.ITaskRepo;
-using toDoList.Models;
-
-namespace toDoList.TaskRepo{
+namespace ToDoList.Repository{
 
     public class TaskRepository : ITaskRepository
     {
+        DataContext context;
+        public TaskRepository(){
+            context = new DataContext();
+        }
         public void delete(TaskItem taskItem){
-
-            using ( var context = new DataContext()){
-
                 context.Tasks.Remove(taskItem);
                 context.SaveChanges();
-            }
         }
 
         public List<TaskItem> list(){
-
-            using ( var context = new DataContext()){
-
                 return context.Tasks.ToList();
-            }
         }
 
         public void save(TaskItem taskItem){
-
-            using (var context = new DataContext()){
                 context.Add(taskItem);
                 context.SaveChanges();
-            }
         }
 
         public void update(TaskItem taskItem){
-
-            using (var context = new DataContext()){
 
                 TaskItem task = context.Tasks.Find(taskItem.Id);
 
@@ -43,17 +32,10 @@ namespace toDoList.TaskRepo{
 
                     context.SaveChanges();
                 }
-                
-            }
         }
 
         public TaskItem getById(int id){
-
-            using (var context = new DataContext()){
-
                 return context.Tasks.Find(id);
-            }
-
         }
     }
 }

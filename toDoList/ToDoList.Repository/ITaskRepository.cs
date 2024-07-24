@@ -1,6 +1,6 @@
-using toDoList.Models;
+using ToDoList.Models;
 
-namespace toDoList.ITaskRepo{
+namespace ToDoList.Repository{
 
     public interface ITaskRepository{
 
