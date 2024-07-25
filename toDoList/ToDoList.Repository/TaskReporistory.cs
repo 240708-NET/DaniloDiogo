@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ToDoList.Models;
 
 namespace ToDoList.Repository{
@@ -5,12 +6,17 @@ namespace ToDoList.Repository{
     public class TaskRepository : ITaskRepository
     {
         DataContext context;
-        public TaskRepository(){
-            context = new DataContext();
+        public TaskRepository(string connectionstring){
+            DbContextOptions<DataContext> options;
+            options = new DbContextOptionsBuilder<DataContext>()
+                .UseSqlServer(connectionstring)
+                .Options;
+            context = new DataContext(options);
         }
-        public void delete(TaskItem taskItem){
-                context.Tasks.Remove(taskItem);
-                context.SaveChanges();
+        public void deleteById(int id){
+            TaskItem taskFound = context.Tasks.Find(id);
+            context.Tasks.Remove(taskFound);
+            context.SaveChanges();
         }
 
         public List<TaskItem> list(){

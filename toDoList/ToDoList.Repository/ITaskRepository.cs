@@ -8,7 +8,9 @@ namespace ToDoList.Repository{
 
         void update(TaskItem taskItem);
         List<TaskItem> list();
-        void delete(TaskItem taskItem);
+        void deleteById(int id);
+
+        TaskItem getById(int id);
 
         
     }

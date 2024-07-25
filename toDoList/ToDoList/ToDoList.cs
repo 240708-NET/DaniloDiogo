@@ -1,5 +1,10 @@
 using ToDoList.Models;
 using ToDoList.Repository;
+﻿using System;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text;
 
 namespace ToDoList
 {
@@ -13,9 +18,16 @@ namespace ToDoList
 
         TaskRepository repository;
 
+        HttpClient client;
+
+        string baseurl = "http://localhost:5146/Task";
+
+         
+
         public ToDoListService()
         {
-            TaskRepository repository = new TaskRepository();
+            //TaskRepository repository = new TaskRepository(File.ReadAllText(@"../connectionstring"));
+            client = new HttpClient();
         }
 
         public void menu()
@@ -68,21 +80,32 @@ namespace ToDoList
 
         }
 
-        public void listTasks()
+        public async void listTasks()
         {
-            repository = new TaskRepository();
-            toDoList = repository.list();
-            if (toDoList.Count > 0)
+            
+            try
             {
-                Console.Clear();
-                this.list();
+                toDoList = new List<TaskItem>();
+                repository = new TaskRepository(File.ReadAllText(@"../connectionstring"));
+                toDoList = repository.list();
+                //string response = await client.GetStringAsync(baseurl);
+                //toDoList = JsonSerializer.Deserialize<List<TaskItem>>(response);
+
+                if (toDoList.Count > 0)
+                {
+                    Console.Clear();
+                    this.list();
+                }
+                else
+                {
+                    Console.WriteLine("TODO List empty! ");
+                    Console.WriteLine("\n");
+                }
+                this.menu();
+            }catch(Exception e){
+                Console.WriteLine("error");
+                Console.WriteLine(e.Message);
             }
-            else
-            {
-                Console.WriteLine("TODO List empty! ");
-                Console.WriteLine("\n");
-            }
-            this.menu();
         }
 
         public void newTask()
@@ -97,8 +120,9 @@ namespace ToDoList
                 if (task.Description.Length >= 2)
                 {
                     //toDoList.Add(task);
-                    repository = new TaskRepository();
-                    this.repository.save(task);
+                    //repository = new TaskRepository();
+                    //this.repository.save(task);
+                    client.PostAsync(baseurl, JsonContent.Create<TaskItem>(task));
                     Console.Clear();
                     Console.WriteLine($"Task '{task.Description}' successfully added!");
                     Console.WriteLine("\n");
@@ -132,8 +156,9 @@ namespace ToDoList
                     if (toDoList.ElementAtOrDefault(option - 1) != null)
                     {
                         toDoList[option - 1].Done = true;
-                        repository = new TaskRepository();
-                        repository.update(toDoList[option - 1]);
+                        //repository = new TaskRepository();
+                        //repository.update(toDoList[option - 1]);
+                        client.PutAsync(baseurl, JsonContent.Create<TaskItem>(toDoList[option - 1]));
                         Console.Clear();
                         Console.WriteLine($"Task {option} set as completed!");
                         Console.WriteLine("\n");
@@ -162,40 +187,48 @@ namespace ToDoList
 
         public void deleteTask()
         {
-            Console.Clear();
-            Console.WriteLine(this.errorMsg);
-            this.list();
-            Console.WriteLine("Enter the task number you want to remove or 0 to cancel: ");
-            int option;
-            if (int.TryParse(Console.ReadLine(), out option))
+            try
             {
-                if (option != 0)
+                Console.Clear();
+                Console.WriteLine(this.errorMsg);
+                this.list();
+                Console.WriteLine("Enter the task number you want to remove or 0 to cancel: ");
+                int option;
+                if (int.TryParse(Console.ReadLine(), out option))
                 {
-                    if (toDoList.ElementAtOrDefault(option - 1) != null)
+                    if (option != 0)
                     {
-                        //toDoList.RemoveAt(option - 1);
-                        repository = new TaskRepository();
-                        repository.delete(toDoList[option - 1]);
-                        Console.Clear();
-                        Console.WriteLine($"Task {option} removed!");
-                        this.menu();
+                        if (toDoList.ElementAtOrDefault(option - 1) != null)
+                        {
+                            //toDoList.RemoveAt(option - 1);
+                            //repository = new TaskRepository();
+                            //repository.deleteById(toDoList[option - 1].Id);
+                            client.DeleteAsync(baseurl + "/" + toDoList[option - 1].Id);
+                            Console.Clear();
+                            Console.WriteLine($"Task {option} removed!");
+                            this.menu();
+                        }
+                        else
+                        {
+                            this.errorMsg = $"Error: Task {option} not found! Try again.";
+                            this.deleteTask();
+                        }
                     }
                     else
                     {
-                        this.errorMsg = $"Error: Task {option} not found! Try again.";
-                        this.deleteTask();
+                        Console.Clear();
+                        this.menu();
                     }
                 }
                 else
                 {
-                    Console.Clear();
-                    this.menu();
+                    Console.WriteLine("Error: Invalid option! Try again.");
+                    this.deleteTask();
                 }
             }
-            else
+            catch
             {
-                Console.WriteLine("Error: Invalid option! Try again.");
-                this.deleteTask();
+                Console.WriteLine("Error");
             }
 
         }
