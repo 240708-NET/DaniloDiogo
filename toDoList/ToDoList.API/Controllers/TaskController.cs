@@ -25,7 +25,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public TaskItem GetDuckById( int id )
+    public TaskItem GetTaskById( int id )
     {
         return this.repository.getById(id);
     }

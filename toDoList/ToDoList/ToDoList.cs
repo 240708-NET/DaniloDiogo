@@ -1,6 +1,6 @@
 using ToDoList.Models;
 using ToDoList.Repository;
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -77,17 +77,17 @@ namespace ToDoList
                 Console.WriteLine("Error: Incorrect option! Try again.");
                 this.menu();
             }
-
         }
 
         public async void listTasks()
         {
-            
             try
             {
                 toDoList = new List<TaskItem>();
+
                 repository = new TaskRepository(File.ReadAllText(@"../connectionstring"));
                 toDoList = repository.list();
+
                 //string response = await client.GetStringAsync(baseurl);
                 //toDoList = JsonSerializer.Deserialize<List<TaskItem>>(response);
 
@@ -103,7 +103,6 @@ namespace ToDoList
                 }
                 this.menu();
             }catch(Exception e){
-                Console.WriteLine("error");
                 Console.WriteLine(e.Message);
             }
         }
@@ -226,9 +225,9 @@ namespace ToDoList
                     this.deleteTask();
                 }
             }
-            catch
+            catch(Exception e)
             {
-                Console.WriteLine("Error");
+                Console.WriteLine(e.Message);
             }
 
         }
