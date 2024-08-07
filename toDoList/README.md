@@ -17,5 +17,5 @@
 
 ## How to run?
 1 - Access the TODO List folder > ToDoList.API and run the command ```dotnet run```.
-2 - Open a new Terminal
+2 - Open a new Terminal.
 3 - Access the TODO List folder > ToDoList and run the command ```dotnet run```.

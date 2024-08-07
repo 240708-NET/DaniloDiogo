@@ -1,0 +1,41 @@
+body {
+  background-color: #282c34;
+}
+#list-container {
+  width: 400px;
+  margin: auto;
+}
+#list-container ul {
+  padding: 0;
+  list-style: none;
+}
+#list-container ul li {
+  padding: 5px;
+  font-size: 24px;
+  background-color: gray;
+  color: white;
+  margin-bottom: 2px;
+  overflow: auto;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+}
+
+#list-container ul li div {
+  width: 50px;
+  /* position: absolute; */
+  top: 0;
+  right: 0;
+  display: inline-block;
+}
+#list-container input {
+  width: 85%;
+  height: 35px;
+}
+
+#form button{
+  width: 10%;
+  height: 35px;
+  margin-left: 5px;
+}
+
